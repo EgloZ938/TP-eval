@@ -33,20 +33,92 @@ def matrix(rows, cols):
     """
     return [[0 for _ in range(cols)] for _ in range(rows)]
 
+def my_sort(my_list: [int]) -> [int]:
+    """
+    Implémentation du tri à bulles.
+    Renvoie une nouvelle liste triée sans modifier la liste d'origine.
+    
+    Args:
+        my_list (list[int]): Liste d'entiers à trier
+    
+    Returns:
+        list[int]: Nouvelle liste triée par ordre croissant
+    """
+    result = my_list.copy()
+    n = len(result)
+    
+    for i in range(n):
+        for j in range(0, n-i-1):
+            if result[j] > result[j+1]:
+                result[j], result[j+1] = result[j+1], result[j]
+    
+    return result
+
+class Matrix:
+    """
+    Classe représentant une matrice de zéros.
+    """
+    def __init__(self, rows: int, cols: int):
+        """
+        Initialise une matrice de dimensions rows x cols remplie de zéros.
+        
+        Args:
+            rows (int): Nombre de lignes
+            cols (int): Nombre de colonnes
+        """
+        self.__data = [[0 for _ in range(cols)] for _ in range(rows)]
+
+    def get_value(self, row: int, col: int) -> int:
+        """
+        Récupère la valeur à la position spécifiée.
+        
+        Args:
+            row (int): Index de la ligne
+            col (int): Index de la colonne
+            
+        Returns:
+            int: Valeur à la position [row][col]
+        """
+        return self.__data[row][col]
+
+    def __eq__(self, other) -> bool:
+        """
+        Compare deux matrices.
+        Renvoie True si les matrices ont les mêmes dimensions et les mêmes valeurs.
+        
+        Args:
+            other (Matrix): Autre matrice à comparer
+            
+        Returns:
+            bool: True si les matrices sont égales, False sinon
+        """
+        if not isinstance(other, Matrix):
+            return False
+        return self.__data == other.__data
+
 if __name__ == '__main__':
-    # Test de several_zeros
+    # Tests des fonctions précédentes
     print("Test de several_zeros():")
     print(several_zeros())
     
-    # Test de several_zeros_custom
     print("\nTest de several_zeros_custom():")
-    print(several_zeros_custom(10))
+    print(several_zeros_custom(5))
     print(several_zeros_custom())
     
-    # Test de matrix
     print("\nTest de matrix():")
     result = matrix(2, 3)
     print(result)
-    print(result[2][3])
-    print(result[1][2])
-    print(result[0])
+    
+    # Test de my_sort
+    print("\nTest de my_sort():")
+    test_list = [2, 6, 1, 9, 3]
+    print(f"Liste originale: {test_list}")
+    print(f"Liste triée: {my_sort(test_list)}")
+    print(f"Liste originale après tri: {test_list}")
+    
+    # Test de la classe Matrix
+    print("\nTest de la classe Matrix:")
+    m1 = Matrix(2, 3)
+    m2 = Matrix(2, 3)
+    print(f"Test égalité de matrices: {m1 == m2}")
+    print(f"Valeur en position (1,1): {m1.get_value(1, 1)}")
